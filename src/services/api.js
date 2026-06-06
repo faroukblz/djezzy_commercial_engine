@@ -9,7 +9,7 @@ export async function predictSegment(features) {
     const res = await fetch(`${BACKEND_URL}/api/marketing/segment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(features),
+      body: JSON.stringify({ features }),
       signal: AbortSignal.timeout(60000),
     })
     if (!res.ok) {

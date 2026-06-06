@@ -31,10 +31,10 @@ def read_root():
     return {"status": "Djezzy AI Hub Backend is running"}
 
 @app.post("/api/marketing/segment")
-async def segment_users(payload: list[list[float]]):
+async def segment_users(payload: dict):
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.post(f"{MARKETING_API_URL}/predict", json={"data": payload})
+            response = await client.post(f"{MARKETING_API_URL}/predict_segment", json=payload)
             response.raise_for_status()
             return response.json()
     except Exception as e:
@@ -44,7 +44,7 @@ async def segment_users(payload: list[list[float]]):
 async def score_user(payload: dict):
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.post(f"{FRAUD_API_URL}/predict", json=payload)
+            response = await client.post(f"{FRAUD_API_URL}/predict_fraud", json=payload)
             response.raise_for_status()
             return response.json()
     except Exception as e:
